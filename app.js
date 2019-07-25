@@ -16,19 +16,20 @@ const methodOverride = require('method-override');
 // seedPosts();
 
 // require routes
-const index 	= require('./routes/index');
-const posts 	= require('./routes/posts');
+const index = require('./routes/index');
+const posts = require('./routes/posts');
 const reviews = require('./routes/reviews');
 
 const app = express();
 
-// connect to the database
-mongoose.connect('mongodb://localhost:27017/surf-shop', { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  console.log('we\'re connected!');
+  console.log('we\'re connected!!');
 });
 
 // use ejs-locals for all ejs templates:
@@ -63,13 +64,13 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // set local variables middleware
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
+  //set up a default user who is always logged in (TESTING PURPOSES ONLY)
   req.user = {
-    // '_id' : '5bb27cd1f986d278582aa58c',
-    // '_id' : '5bc521c0b142b6d7f7523406',
-    '_id' : '5bfed10ad176f845e38aec92',
-    'username' : 'ian3'
+    "_id": "5d28e34e2b9bd21f167df772",
+    "username": "mike"
   }
+  //=====================================================================
   res.locals.currentUser = req.user;
   // set default page title
   res.locals.title = 'Surf Shop';
@@ -89,14 +90,14 @@ app.use('/posts', posts);
 app.use('/posts/:id/reviews', reviews);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // // set locals, only providing error in development
   // res.locals.message = err.message;
   // res.locals.error = req.app.get('env') === 'development' ? err : {};

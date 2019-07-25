@@ -27,6 +27,7 @@
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
+    "chalk": "^2.4.2",
     "dotenv": "^6.0.0",
     "locus": "^2.0.1"
   }

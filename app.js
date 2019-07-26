@@ -12,8 +12,8 @@ const User = require('./models/user');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
-const seedPosts = require('./seeds');
-seedPosts();
+// const seedPosts = require('./seeds');
+// seedPosts();
 
 // require routes
 const index = require('./routes/index');
@@ -29,7 +29,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  console.log('we\'re connected!!');
+  console.log("we're connected!!");
 });
 
 // use ejs-locals for all ejs templates:
@@ -50,11 +50,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 
 // Configure Passport and Sessions
-app.use(session({
-  secret: 'hang ten dude!',
-  resave: false,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: 'hang ten dude!',
+    resave: false,
+    saveUninitialized: true
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -64,12 +66,12 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // set local variables middleware
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   //set up a default user who is always logged in (TESTING PURPOSES ONLY)
   req.user = {
-    "_id": "5d28e34e2b9bd21f167df772",
-    "username": "mike"
-  }
+    _id: '5d28e34e2b9bd21f167df772',
+    username: 'mike'
+  };
   //=====================================================================
   res.locals.currentUser = req.user;
   // set default page title
@@ -90,14 +92,14 @@ app.use('/posts', posts);
 app.use('/posts/:id/reviews', reviews);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   // // set locals, only providing error in development
   // res.locals.message = err.message;
   // res.locals.error = req.app.get('env') === 'development' ? err : {};

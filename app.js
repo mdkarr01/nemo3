@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const engine = require('ejs-mate');
 const path = require('path');
+const chalk = require('chalk');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -29,7 +30,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  console.log("we're connected!!");
+  console.log(chalk.white.bold.bgRed('Connected to MLab!'));
 });
 
 // use ejs-locals for all ejs templates:

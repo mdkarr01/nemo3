@@ -119,7 +119,7 @@ module.exports = {
     post.description = req.body.post.description;
     post.price = req.body.post.price;
     // save the updated post into the db
-    post.save();
+    await post.save();
     // redirect to show page
     res.redirect(`/posts/${post.id}`);
   },

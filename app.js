@@ -70,8 +70,9 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next) {
   //set up a default user who is always logged in (TESTING PURPOSES ONLY)
   req.user = {
-    _id: '5d28e34e2b9bd21f167df772',
-    username: 'mike'
+    // _id: '5d28e34e2b9bd21f167df772',
+    _id: '5d2a30a2f2d357030dcebbcc',
+    username: 'mdkarr'
   };
   //=====================================================================
   res.locals.currentUser = req.user;
